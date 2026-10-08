@@ -2,6 +2,15 @@ const toggle=document.querySelector('.mobile-toggle');
 const menu=document.querySelector('.menu');
 if(toggle&&menu){toggle.addEventListener('click',()=>{const open=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));});}
 
+if(!document.querySelector('a[href="/privaatsus/"]')){
+  const footerLinks=document.querySelector('.footer-grid > div:last-child');
+  if(footerLinks){
+    const privacyLink=document.createElement('p');
+    privacyLink.innerHTML='<a href="/privaatsus/">Privaatsus ja küpsised</a>';
+    footerLinks.appendChild(privacyLink);
+  }
+}
+
 const measurementId='G-G5KYTZ3EV7';
 window.dataLayer=window.dataLayer||[];
 window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
@@ -47,6 +56,12 @@ if(savedConsent){
   });
   document.body.appendChild(consent);
 }
+document.querySelectorAll('[data-manage-consent]').forEach((button)=>{
+  button.addEventListener('click',()=>{
+    localStorage.removeItem(consentKey);
+    window.location.reload();
+  });
+});
 
 const form=document.querySelector('[data-quote-form]');
 if(form){
